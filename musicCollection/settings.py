@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import cloudinary_storage
+from dotenv import load_dotenv
+load_dotenv()
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +33,7 @@ SECRET_KEY = "django-insecure-uo(!(8%rnm+&-^$dg!^04t&0bnm&(@6iah$qblzbt!w_rn&i9u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -44,7 +50,10 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "djoser",
     "albums",
-    "corsheaders"
+    "corsheaders",
+    'cloudinary',
+    'cloudinary_storage',
+    'whitenoise',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -77,6 +86,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -121,13 +131,32 @@ WSGI_APPLICATION = "musicCollection.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600
+    )
 }
 
+cloudinary.config(
+  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAM"), 
+  api_key=os.getenv("CLOUDINARY_API_KEY"),       
+  api_secret=os.getenv("CLOUDINARY_API_SECRET") 
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -167,6 +196,8 @@ STATIC_URL = "static/"
 # Media files settings
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

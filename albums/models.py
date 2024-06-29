@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from pymongo import MongoClient
 class Album(models.Model):
     GENRE_CHOICES = [
         ('rock', 'Rock'),
