@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-uo(!(8%rnm+&-^$dg!^04t&0bnm&(@6iah$qblzbt!w_rn&i9u"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -56,12 +56,13 @@ INSTALLED_APPS = [
     'whitenoise',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://yourdomain.com',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:5173',
+#     'http://127.0.0.1:5173',
+#     'https://yourdomain.com',
+# ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -151,7 +152,7 @@ DATABASES = {
 }
 
 cloudinary.config(
-  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAM"), 
+  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"), 
   api_key=os.getenv("CLOUDINARY_API_KEY"),       
   api_secret=os.getenv("CLOUDINARY_API_SECRET") 
 )
