@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("albums", "0003_alter_album_ranking_alter_album_year_of_release"),
     ]

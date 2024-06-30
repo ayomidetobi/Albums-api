@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("albums", "0004_album_description_album_duration_and_more"),
     ]

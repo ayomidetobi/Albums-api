@@ -17,6 +17,7 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary_storage
 from dotenv import load_dotenv
+
 load_dotenv()
 import dj_database_url
 
@@ -51,9 +52,9 @@ INSTALLED_APPS = [
     "djoser",
     "albums",
     "corsheaders",
-    'cloudinary',
-    'cloudinary_storage',
-    'whitenoise',
+    "cloudinary",
+    "cloudinary_storage",
+    "whitenoise",
 ]
 
 # CORS_ALLOWED_ORIGINS = [
@@ -85,9 +86,9 @@ DJOSER = {
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -144,20 +145,20 @@ WSGI_APPLICATION = "musicCollection.wsgi.application"
 # }
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': dj_database_url.config(
+    "default": dj_database_url.config(
         # Replace this value with your local database's connection string.
         default=os.getenv("DATABASE_URL"),
-        conn_max_age=600
+        conn_max_age=600,
     )
 }
 
 cloudinary.config(
-  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"), 
-  api_key=os.getenv("CLOUDINARY_API_KEY"),       
-  api_secret=os.getenv("CLOUDINARY_API_SECRET") 
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
 )
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -197,8 +198,8 @@ STATIC_URL = "static/"
 # Media files settings
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
