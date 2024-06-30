@@ -1,13 +1,13 @@
-from django_mongoengine import mongo_admin as admin
+from django.contrib import admin
 from django.utils.html import format_html
-from .models import Album
+from .models import Album, Track 
 
-# class TrackInline(admin.TabularInline):
-#     model = Album.tracks
-#     extra = 1
+class TrackInline(admin.TabularInline):
+    model = Track  
+    extra = 1
 
 
-class AlbumAdmin(admin.DocumentAdmin):
+class AlbumAdmin(admin.ModelAdmin):
     list_display = (
         "artist_name",
         "album_name",
@@ -17,7 +17,7 @@ class AlbumAdmin(admin.DocumentAdmin):
     )
     search_fields = ("artist_name", "album_name")
     list_filter = ("year_of_release", "ranking")
-    # inlines = [TrackInline]
+    inlines = [TrackInline]
 
     def album_cover_display(self, obj):
         if obj.album_cover:
